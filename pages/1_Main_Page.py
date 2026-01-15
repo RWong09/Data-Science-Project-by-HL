@@ -7,11 +7,11 @@ from recommender import (
 )
 
 st.set_page_config(
-    page_title="Malaysia Living Place Recommendation System",
+    page_title="Malaysia District Living Recommendation System",
     layout="wide"
 )
 
-st.title("Malaysia Living Place Recommendation System")
+st.title("Malaysia District Living Recommendation System")
 
 #Load data
 @st.cache_data
@@ -46,8 +46,8 @@ st.dataframe(top_districts)
 st.header("Salary Ranking by District")
 
 salary_mode = st.radio(
-    "View districts with:",
-    ["highest", "lowest"],
+    "View districts with average salary of:",
+    ["Highest", "Lowest"],
     horizontal=True
 )
 
@@ -59,14 +59,14 @@ salary_rank = highest_lowest_salary_districts(
 st.dataframe(salary_rank)
 
 #Section 3: House Rental Price Ranking
-st.header("House Rental Price Ranking")
+st.header("House Rental Price Ranking by District")
 
 house_types = ["All"] + sorted(house_df["Type"].dropna().unique().tolist())
 selected_type = st.selectbox("Select house type", house_types)
 
 price_mode = st.radio(
     "View house rental prices:",
-    ["lowest", "highest"],
+    ["Lowest", "Highest"],
     horizontal=True,
     key="price_mode"
 )

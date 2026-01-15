@@ -2,11 +2,11 @@ import streamlit as st
 import pandas as pd
 
 st.set_page_config(
-    page_title="Malaysia Living Place Recommendation System",
+    page_title="Malaysia District Living Recommendation System",
     layout="wide"
 )
 
-st.title("Malaysia Living Place Recommendation System")
+st.title("Malaysia District Living Recommendation System")
 
 st.header("💼 Job Recommendation System")
 
@@ -15,6 +15,16 @@ def load_jobs():
     return pd.read_csv("job_scores.csv")
 
 job_df = load_jobs()
+
+#Column rename mapping
+column_rename = {
+    'title' : 'Job Title',
+    'salary': 'Salary',
+    'contract_type_name': 'Contract Type',
+    'state': 'State',
+    'district': 'District',
+    'job_score': 'Job Score'
+}
 
 title_search = st.text_input("Search job title (optional)")
 
@@ -72,5 +82,5 @@ st.dataframe(
         "state",
         "district",
         "job_score"
-    ]]
+    ]].rename(columns=column_rename)
 )
