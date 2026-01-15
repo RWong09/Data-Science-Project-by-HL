@@ -1,4 +1,4 @@
-# WIH3001-Project
+# Data Science Project: District Living Recommendation System
 
 Welcome to the Malaysia district living recommendation system, a project powered by a data science student in University of Malaysia for his data science project.
 
