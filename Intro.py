@@ -1,14 +1,14 @@
 import streamlit as st
 
 st.set_page_config(
-    page_title="Malaysia Living Place Recommendation System",
+    page_title="Malaysia District Living Recommendation System",
     layout="wide"
 )
 
-st.title("Malaysia Living Place Recommendation System")
+st.title("Malaysia District Living Recommendation System")
 
 st.markdown("""
-Welcome to the **Malaysia Living Place Recommendation System**.
+Welcome to the **Malaysia District Living Recommendation System**.
 
 Use the sidebar to navigate:
 - 📊 Dashboard for job and house rental markets

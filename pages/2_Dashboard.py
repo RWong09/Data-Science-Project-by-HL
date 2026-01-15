@@ -15,6 +15,13 @@ def load_data():
 
 job_df, house_df = load_data()
 
+#Column rename mapping for display
+column_rename = {
+    'contract_type_name': 'Contract Type',
+    'state': 'State',
+    'district': 'District'
+}
+
 st.sidebar.header("🔎 Filters")
 
 #Let user choose which dashboard filters to show. "Both Dashboards" shows only the State filter.
@@ -106,15 +113,16 @@ with job_tab:
         .size()
         .reset_index(name="job_count")
         .sort_values("job_count", ascending=False)
+        .rename(columns={'state': 'State'})
     )
 
     fig_jobs_state = px.bar(
         jobs_by_state,
         x="job_count",
-        y="state",
+        y="State",
         orientation="h",
         title="Number of Jobs by State",
-        labels={"job_count": "Number of Jobs", "state": "State"},
+        labels={"job_count": "Number of Jobs", "State": "State"},
         color="job_count",
         color_continuous_scale="Inferno"
     )
@@ -130,12 +138,13 @@ with job_tab:
         job_df_f.groupby("contract_type_name")
         .size()
         .reset_index(name="count")
+        .rename(columns={'contract_type_name': 'Contract Type'})
     )
 
     fig_contract = px.pie(
         contract_counts,
         values="count",
-        names="contract_type_name",
+        names="Contract Type",
         hole=0.45,
         title="Jobs by Contract Type"
     )
@@ -148,11 +157,12 @@ with job_tab:
         job_df_f.groupby("state")
         .salary.mean()
         .reset_index()
+        .rename(columns={'state': 'State'})
     )
 
     fig_salary_tree = px.treemap(
         salary_state,
-        path=["state"],
+        path=["State"],
         values="salary",
         color="salary",
         title="Average Salary by State (RM)",

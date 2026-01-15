@@ -1,5 +1,19 @@
 import pandas as pd
 
+def rename_columns_for_display(df):
+    """Rename columns for display in dataframes"""
+    rename_map = {
+        'contract_type_name': 'Contract Type',
+        'state': 'State',
+        'district': 'District',
+        'avg_salary': 'Average Salary',
+        'avg_price': 'Average Price',
+        'total_score': 'Total Score',
+        'house_score': 'House Score',
+        'job_score': 'Job Score'
+    }
+    return df.rename(columns=rename_map)
+
 def recommend_districts(district_df, job_weight=0.6, house_weight=0.4, top_k=5):
     df = district_df.copy()
 
@@ -14,7 +28,7 @@ def recommend_districts(district_df, job_weight=0.6, house_weight=0.4, top_k=5):
         .sort_values("total_score", ascending=False)
     )
 
-    return result.head(top_k)
+    return rename_columns_for_display(result.head(top_k))
 
 
 def highest_lowest_salary_districts(job_df, mode="highest", top_k=5):
@@ -34,7 +48,7 @@ def highest_lowest_salary_districts(job_df, mode="highest", top_k=5):
     use_df = cleaned_pos if not cleaned_pos.empty else avg_salary
 
     ascending = True if mode == "lowest" else False
-    return use_df.sort_values("avg_salary", ascending=ascending).head(top_k)
+    return rename_columns_for_display(use_df.sort_values("avg_salary", ascending=ascending).head(top_k))
 
 
 def highest_lowest_house_price(house_df, house_type=None, mode="lowest", top_k=5, house_raw_df=None):
@@ -92,4 +106,4 @@ def highest_lowest_house_price(house_df, house_type=None, mode="lowest", top_k=5
     use_price_df = cleaned_pos_p if not cleaned_pos_p.empty else avg_price
 
     ascending = True if mode == "lowest" else False
-    return use_price_df.sort_values("avg_price", ascending=ascending).head(top_k)
+    return rename_columns_for_display(use_price_df.sort_values("avg_price", ascending=ascending).head(top_k))

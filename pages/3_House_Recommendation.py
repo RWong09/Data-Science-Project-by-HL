@@ -2,11 +2,11 @@ import streamlit as st
 import pandas as pd
 
 st.set_page_config(
-    page_title="Malaysia Living Place Recommendation System",
+    page_title="Malaysia District Living Recommendation System",
     layout="wide"
 )
 
-st.title("Malaysia Living Place Recommendation System")
+st.title("Malaysia District Living Recommendation System")
 
 st.header("🏠 House Rental Recommendation System")
 
@@ -15,6 +15,11 @@ def load_houses():
     return (pd.read_csv("house_scores.csv"), pd.read_csv("house_data_cleaned.csv"))
 
 house_df, house_raw = load_houses()
+
+#Column rename mapping
+column_rename = {
+    'house_score': 'House Score'
+}
 
 #Use raw cleaned data for filter options and slider bounds
 #Ensure numeric columns in house_raw are proper types
@@ -101,7 +106,7 @@ if house_type != "All":
 if furnished != "All":
     df = df[df["Furnished Status"] == furnished]
 
-# Ensure numeric columns exist before filtering
+#Ensure numeric columns exist before filtering
 if "Price" in df.columns:
     df["Price"] = pd.to_numeric(df["Price"], errors="coerce")
 if "Number of beds" in df.columns:
@@ -116,7 +121,7 @@ df = df[
     (df.get("Number of bathrooms", 0) >= baths)
 ]
 
-# Sort by the scored house_score (descending)
+#Sort by the scored house_score (descending)
 df = df.sort_values("house_score", ascending=False)
 
 if top_n != "All":
@@ -135,5 +140,5 @@ st.dataframe(
         "State",
         "District",
         "house_score"
-    ]]
+    ]].rename(columns=column_rename)
 )
